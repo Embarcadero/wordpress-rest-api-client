@@ -178,7 +178,10 @@ begin
   WebBrowser.LoadFromStrings(MemoDefaultDark.Lines.Text.Replace('%s',Memo1.Lines.Text),'about:blank');
   DM.InitializeDatabase;
   if EndPointEdit.Text='' then
-    TabControl1.ActiveTab := SettingsTab
+    begin
+      Timer.Enabled := False;
+      TabControl1.ActiveTab := SettingsTab;
+    end
   else
     TabControl1.ActiveTab := ViewContentTab;
   FrameAdd.Initialize;
@@ -256,6 +259,8 @@ end;
 procedure TMainForm.RefreshButtonClick(Sender: TObject);
 begin
   TLinkObservers.ControlChanged(SearchEdit);
+  if FDMemTable1.Active then
+    FDMemTable1.EmptyDataSet;
   HTTPBasicAuthenticator1.Username := DM.SettingsFDTable.FieldByName('Username').AsString;
   HTTPBasicAuthenticator1.Password := DM.SettingsFDTable.FieldByName('Password').AsString;
   RESTClient1.BaseURL := DM.SettingsFDTable.FieldByName('Endpoint').AsString;

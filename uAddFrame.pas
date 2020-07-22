@@ -223,6 +223,7 @@ begin
         UpdatePostRequestObj.AddPair('id', PostIDAsStr);
         UpdatePostRequestObj.AddPair('featured_media', MediaIDAsStr); // The ID of the featured media for the object.
         UpdatePostRequestObj.AddPair('content', DescMemo.Lines.Text+'<br/><br/>'+MediaHTML);
+        UpdatePostRequestObj.AddPair('status', 'publish');
 
         AnyRequest.ClearBody;
         AnyRequest.Params.Clear;
