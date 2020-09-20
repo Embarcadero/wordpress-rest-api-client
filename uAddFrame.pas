@@ -9,7 +9,8 @@ uses
   FMX.Controls.Presentation, FMX.Effects, REST.Types, REST.Response.Adapter,
   REST.Client, Data.Bind.Components, Data.Bind.ObjectScope,
   REST.Authenticator.Basic, FMX.TabControl, System.Net.URLClient,
-  System.Net.HttpClient, System.Net.HttpClientComponent, FMX.Memo.Types;
+  System.Net.HttpClient, System.Net.HttpClientComponent, FMX.Memo.Types,
+  Data.Bind.DBScope;
 
 type
   TAddFrame = class(TFrame)
@@ -73,6 +74,7 @@ type
     ZoomInButton: TButton;
     ZoomOutButton: TButton;
     ContentLayout: TLayout;
+    FeedBS: TBindSourceDB;
     procedure PaintBox1Paint(Sender: TObject; Canvas: TCanvas);
     procedure RefreshBGButtonClick(Sender: TObject);
     procedure ListBoxItem8Click(Sender: TObject);
@@ -93,6 +95,7 @@ type
     { Public declarations }
     procedure Initialize;
     procedure CreatePost(Sender: TObject);
+    procedure CreateRSSPost(Sender: TObject; FMediaId: String; FNotifyEvent: TNotifyEvent);
     procedure SaveImage;
     function GetResolution: Integer;
   end;
@@ -111,6 +114,159 @@ begin
    begin
     Rectangle1.MakeScreenshot.SaveToFile(SaveDialog1.Files[0]);
    end;
+end;
+
+procedure TAddFrame.CreateRSSPost(Sender: TObject; FMediaId: String; FNotifyEvent: TNotifyEvent);
+var
+  FileStream: TFileStream;
+  CreatePostRequestObj: TJSONObject;
+  CreatePostResultObj: TJSONObject;
+  UpdatePostRequestObj: TJSONObject;
+  CreateMediaResultObj : TJSONObject;
+  UpdateMediaRequestObj: TJSONObject;
+  PostIDAsStr: string;
+  MediaIDAsStr: string;
+  TestTime: string;
+  MediaHTML: string;
+begin
+  HTTPBasicAuthenticator1.Username := DM.SettingsFDTable.FieldByName('Username').AsString;
+  HTTPBasicAuthenticator1.Password := DM.SettingsFDTable.FieldByName('Password').AsString;
+
+  RESTClient1.BaseURL := DM.SettingsFDTable.FieldByName('Endpoint').AsString;
+
+  if Sender is TButton then
+    TButton(Sender).Enabled := False;
+
+
+  TTask.Run(procedure begin
+
+    try
+
+      PostIDAsStr := '';
+      MediaIDAsStr := FMediaId;
+      MediaHTML := '';
+      TestTime := ' - '+FormatDateTime('dd-mm-yyyy hh:mm:ss', now);
+
+      // Create new Post
+      // https://developer.wordpress.org/rest-api/reference/posts/#create-a-post
+      CreatePostRequestObj := TJSONObject.Create;
+      try
+        CreatePostRequestObj.AddPair('title', FeedBS.DataSet.FieldByName('title').AsWideString);
+
+        AnyRequest.ClearBody;
+        AnyRequest.Params.Clear;
+        AnyRequest.Method := rmPOST;
+        AnyRequest.Resource := 'posts';
+        AnyRequest.AddParameter('Content-Type', 'application/json', TRESTRequestParameterKind.pkHTTPHEADER, [poDoNotEncode]);
+        AnyRequest.AddParameter('Accept', 'application/json', TRESTRequestParameterKind.pkHTTPHEADER, [poDoNotEncode]);
+        AnyRequest.AddBody(CreatePostRequestObj);
+        AnyRequest.Execute;
+
+        CreatePostResultObj := RESTResponse1.JSONValue as TJSONObject;
+        PostIDAsStr := CreatePostResultObj.GetValue('id').ToString;
+      finally
+        FreeAndNil(CreatePostRequestObj);
+      end;
+
+      {Rectangle1.MakeScreenshot.SaveToFile(TPath.Combine(TPath.GetDocumentsPath,'post.png'));
+      // Upload new image (will create new media item)
+      FileStream := TFileStream.Create(TPath.Combine(TPath.GetDocumentsPath,'post.png'), fmOpenRead);
+      try
+        AnyRequest.ClearBody;
+        AnyRequest.Params.Clear;
+        AnyRequest.Method := rmPOST;
+        AnyRequest.Resource := 'media';
+        AnyRequest.AddParameter('Content-Type', 'application/binary', TRESTRequestParameterKind.pkHTTPHEADER, [poDoNotEncode]);
+        AnyRequest.AddParameter('Content-Disposition', 'attachment; filename=post.png', TRESTRequestParameterKind.pkHTTPHEADER, [poDoNotEncode]);
+        AnyRequest.AddParameter('Accept', 'application/json', TRESTRequestParameterKind.pkHTTPHEADER, [poDoNotEncode]);
+        AnyRequest.Params.AddItem('body', FileStream, pkREQUESTBODY, [poDoNotEncode], ctIMAGE_JPEG);
+        AnyRequest.Execute;
+
+        // parse response
+        CreateMediaResultObj := RESTResponse1.JSONValue as TJSONObject;
+        MediaIDAsStr := CreateMediaResultObj.GetValue('id').ToString;
+
+        try
+          MediaHTML := (CreateMediaResultObj.GetValue('description') as TJSONObject).GetValue('rendered').Value;
+        except
+          MediaHTML := '';
+        end;
+      finally
+        FreeAndNil(FileStream);
+        TFile.Delete(TPath.Combine(TPath.GetDocumentsPath,'post.png'));
+      end;
+
+
+      // Update a Media Item
+      // https://developer.wordpress.org/rest-api/reference/media/#update-a-media-item
+      UpdateMediaRequestObj := TJSONObject.Create;
+      try
+        UpdateMediaRequestObj.AddPair('id', MediaIDAsStr);
+        UpdateMediaRequestObj.AddPair('title', TitleMemo.Lines.Text);
+        UpdateMediaRequestObj.AddPair('description', '');
+        UpdateMediaRequestObj.AddPair('post', PostIDAsStr); // The ID for the associated post of the attachment.
+
+        AnyRequest.ClearBody;
+        AnyRequest.Params.Clear;
+        AnyRequest.Method := rmPOST;
+        AnyRequest.Resource := 'media/'+MediaIDAsStr;
+        AnyRequest.AddParameter('Content-Type', 'application/json', TRESTRequestParameterKind.pkHTTPHEADER, [poDoNotEncode]);
+        AnyRequest.AddParameter('Accept', 'application/json', TRESTRequestParameterKind.pkHTTPHEADER, [poDoNotEncode]);
+        AnyRequest.AddBody(UpdateMediaRequestObj);
+        AnyRequest.Execute;
+      finally
+        FreeAndNil(UpdateMediaRequestObj);
+      end;    }
+
+
+      // Update a Post Item (update property featured_media)
+      // https://developer.wordpress.org/rest-api/reference/posts/#update-a-post
+      UpdatePostRequestObj := TJSONObject.Create;
+      try
+        UpdatePostRequestObj.AddPair('date', FormatDateTime('yyyy-mm-dd"T"hh:mm:ss', FeedBS.DataSet.FieldByName('datetime').AsDateTime));
+        UpdatePostRequestObj.AddPair('date_gmt', FormatDateTime('yyyy-mm-dd"T"hh:mm:ss', FeedBS.DataSet.FieldByName('datetime').AsDateTime));
+        UpdatePostRequestObj.AddPair('modified', FormatDateTime('yyyy-mm-dd"T"hh:mm:ss', FeedBS.DataSet.FieldByName('datetime').AsDateTime));
+        UpdatePostRequestObj.AddPair('modified_gmt', FormatDateTime('yyyy-mm-dd"T"hh:mm:ss', FeedBS.DataSet.FieldByName('datetime').AsDateTime));
+        UpdatePostRequestObj.AddPair('id', PostIDAsStr);
+        UpdatePostRequestObj.AddPair('featured_media', MediaIDAsStr); // The ID of the featured media for the object.
+        UpdatePostRequestObj.AddPair('content', FeedBS.DataSet.FieldByName('description').AsWideString);
+        UpdatePostRequestObj.AddPair('categories', '1');
+        UpdatePostRequestObj.AddPair('status', 'publish');
+
+        AnyRequest.ClearBody;
+        AnyRequest.Params.Clear;
+        AnyRequest.Method := rmPOST;
+        AnyRequest.Resource := 'posts/'+PostIDAsStr;
+        AnyRequest.AddParameter('Content-Type', 'application/json', TRESTRequestParameterKind.pkHTTPHEADER, [poDoNotEncode]);
+        AnyRequest.AddParameter('Accept', 'application/json', TRESTRequestParameterKind.pkHTTPHEADER, [poDoNotEncode]);
+        AnyRequest.AddBody(UpdatePostRequestObj);
+        AnyRequest.Execute;
+
+      finally
+        FreeAndNil(UpdatePostRequestObj);
+      end;
+
+      FeedBS.DataSet.Edit;
+      FeedBS.DataSet.FieldByName('posted').AsInteger := 1;
+      FeedBS.DataSet.Post;
+
+      FNotifyEvent(Sender);
+
+    except
+      on E: Exception do
+      begin
+        TThread.Synchronize(nil, procedure begin
+          ShowMessage(E.Message);
+        end);
+      end;
+    end;
+
+
+    if Sender is TButton then
+      TButton(Sender).Enabled := True;
+
+  end);
+
 end;
 
 procedure TAddFrame.CreatePost(Sender: TObject);
@@ -262,6 +418,7 @@ end;
 
 procedure TAddFrame.Initialize;
 begin
+  FeedBS.DataSet := DM.FDTable1;
   ComboBox1.ItemIndex := 2;
   DrawImage;
   Image9Click(Image9);

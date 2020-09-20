@@ -1,163 +1,164 @@
 ﻿[MultiView1]
-Coordinates=1099,1486,67,33
+Coordinates=731,905,67,33
 
 [Button1]
-Coordinates=411,1340,53,51
+Coordinates=874,828,53,51
 
 []
 Coordinates=562,1,123,33
 Visible=True
 
 [BindSourceDB1]
-Coordinates=147,10,146,897
+Coordinates=268,453,120,123
 
 [BindingsList1]
 Coordinates=98,65,82,33
 
 [Memo1]
-Coordinates=10,527,49,51
+Coordinates=468,489,49,51
 Visible=True
 
 [HTTPBasicAuthenticator1]
-Coordinates=10,1128,141,87
+Coordinates=1453,417,141,87
 
 [RESTRequest1]
-Coordinates=1052,150,88,123
+Coordinates=487,139,88,123
 
 [RESTResponseDataSetAdapter1]
 Coordinates=354,429,174,33
 
 [RESTResponse1]
-Coordinates=1386,10,96,285
+Coordinates=601,10,96,303
 
 [RESTClient1]
-Coordinates=803,1128,76,69
+Coordinates=165,656,76,69
 
 [FDMemTable1]
 Coordinates=275,294,84,33
 Visible=False
 
 [SearchEditButton1]
-Coordinates=1876,1340,107,33
+Coordinates=432,905,107,33
 
 [Splitter1]
-Coordinates=1288,1486,55,33
+Coordinates=1475,905,55,33
 
 [ToolBar1]
-Coordinates=1462,1486,58,33
+Coordinates=635,1041,58,33
 
 [ClientLayout]
-Coordinates=1436,1340,76,33
+Coordinates=10,982,76,33
 
 [ContentListView]
-Coordinates=401,439,95,195
+Coordinates=93,417,95,195
 Visible=True
 
 [ImageList]
 Coordinates=27,304,62,33
 
 [LeftLayout]
-Coordinates=1555,1486,66,33
+Coordinates=915,982,66,33
 
 [WebBrowser]
-Coordinates=723,1424,77,33
+Coordinates=968,905,77,33
 
 [RefreshButton]
-Coordinates=885,356,85,69
+Coordinates=331,322,85,69
 ExplicitSubNodes=Visible
 
 [MemoDefaultDark]
-Coordinates=1172,1128,101,51
+Coordinates=247,828,101,51
 
 [Timer]
 Coordinates=275,123,42,33
 
 [ViewContentIconButton]
-Coordinates=997,1128,131,51
+Coordinates=556,656,131,51
 
 [ViewContentTab]
-Coordinates=419,1424,95,33
+Coordinates=719,1041,95,33
 
 [FrameAdd.ExportButton]
 Coordinates=267,933,133,51
 
 [Layout2]
-Coordinates=1202,1486,53,33
+Coordinates=1071,905,53,33
 
 [FrameAdd.LoadOtherBGButton]
 Coordinates=871,1028,168,51
 
 [TabControl1]
-Coordinates=1656,1486,74,33
+Coordinates=989,1041,74,33
 
 [AddContentTab]
-Coordinates=837,1424,91,33
+Coordinates=1608,1041,91,33
 
 [AddContentIconButton]
-Coordinates=1743,1128,127,51
+Coordinates=10,751,127,51
 
 [Layout1]
-Coordinates=1376,1486,53,33
+Coordinates=456,1100,53,33
 
 [Layout3]
-Coordinates=1800,1424,53,33
+Coordinates=1589,982,53,33
 
 [Layout6]
-Coordinates=2384,1424,53,33
+Coordinates=556,1041,53,33
 
 [Layout5]
-Coordinates=1767,1486,53,33
+Coordinates=1529,1041,53,33
 
 [AddContentButton]
-Coordinates=10,1256,106,51
+Coordinates=10,828,106,51
 
 [EndPointEdit]
-Coordinates=1754,246,78,51
+Coordinates=1108,232,78,51
 Visible=True
 
 [PasswordEdit]
-Coordinates=1752,128,82,51
+Coordinates=1106,10,82,51
 Visible=True
 
 [Label7]
-Coordinates=89,1340,46,51
+Coordinates=163,751,46,51
 
 [SettingsButton]
-Coordinates=449,1256,88,51
+Coordinates=1045,751,88,51
 
 [Layout4]
-Coordinates=1853,1486,53,33
+Coordinates=274,905,53,33
 
 [SettingsIconButton]
-Coordinates=1082,1256,109,51
+Coordinates=139,905,109,51
 
 [Label6]
-Coordinates=168,1340,46,51
+Coordinates=713,656,46,51
 
 [FrameAdd.Button1]
 Coordinates=607,933,107,51
 
 [Label4]
-Coordinates=1978,1256,46,51
+Coordinates=1075,656,46,51
 
 [UsernameEdit]
-Coordinates=1750,10,83,51
+Coordinates=1106,121,83,51
+Visible=True
 
 [SettingsTab]
-Coordinates=310,1424,73,33
+Coordinates=847,1100,73,33
 
 [ViewContentButton]
-Coordinates=2269,1128,109,51
+Coordinates=503,828,109,51
 
 [Label5]
-Coordinates=10,1340,46,51
+Coordinates=1239,656,46,51
 
 [DM.SettingsFDMemTable]
 Visible=False
 Coordinates=883,402,137,33
 
 [SettingsBindSourceDB]
-Coordinates=1525,84,127,123
+Coordinates=899,85,127,123
 
 [DM.SettingsFDTable]
 Coordinates=619,734,114,33
@@ -174,11 +175,11 @@ Coordinates=1260,10,102,33
 Visible=False
 
 [SaveButton]
-Coordinates=535,183,71,69
+Coordinates=338,10,71,69
 ExplicitSubNodes=Visible
 
 [PostButton]
-Coordinates=895,10,69,69
+Coordinates=10,166,69,69
 Visible=True
 ExplicitSubNodes=Visible
 
@@ -186,25 +187,283 @@ ExplicitSubNodes=Visible
 Coordinates=723,314,103,51
 
 [SearchEdit]
-Coordinates=895,183,68,69
+Coordinates=339,166,68,69
 Visible=True
 ExplicitSubNodes=Visible
 
 [BindSourceDB2]
-Coordinates=696,117,92,177
+Coordinates=159,112,92,177
 
 [FrameAdd.Label1]
 Coordinates=2261,1256,100,51
 
 [HelpMemo]
-Coordinates=1378,1256,66,51
+Coordinates=1147,656,66,51
 
 [ViewLabel]
-Coordinates=1003,1256,46,51
+Coordinates=1575,828,64,51
 
 [PostLabel]
-Coordinates=918,1128,46,51
+Coordinates=716,751,63,51
 
 [SettingsLabel]
-Coordinates=2404,1256,46,51
+Coordinates=767,828,81,51
+
+[FrameAdd.TitleMemo]
+Coordinates=1546,751,119,51
+
+[FrameAdd.Image1]
+Coordinates=1288,751,103,51
+
+[FrameAdd.OpenDialog3]
+Coordinates=719,447,131,33
+
+[FrameAdd.Layout4]
+Coordinates=1165,982,107,33
+
+[FrameAdd.HTTPBasicAuthenticator1]
+Coordinates=981,417,195,87
+
+[FrameAdd.ListBoxItem8]
+Coordinates=305,982,132,33
+
+[FrameAdd.Image3]
+Coordinates=1446,828,103,51
+
+[FrameAdd.Image2]
+Coordinates=1317,828,103,51
+
+[FrameAdd.ComboBox1]
+Coordinates=685,417,128,123
+
+[FrameAdd.ListBoxItem6]
+Coordinates=240,1041,132,33
+
+[FrameAdd.OpenDialog1]
+Coordinates=142,711,131,33
+
+[FrameAdd.TabItem1]
+Coordinates=101,1041,113,33
+
+[FrameAdd.Image8]
+Coordinates=10,905,103,51
+
+[FrameAdd.SearchEditButton1]
+Coordinates=596,982,160,33
+
+[FrameAdd.PaintBox1]
+Coordinates=824,905,118,33
+
+[FrameAdd.RESTClient1]
+Coordinates=10,656,129,69
+
+[FrameAdd.Layout5]
+Coordinates=1456,982,107,33
+
+[FrameAdd.RESTResponse1]
+Coordinates=723,10,150,303
+
+[FrameAdd.Layout1]
+Coordinates=463,982,107,33
+
+[FrameAdd.Image5]
+Coordinates=482,751,103,51
+
+[FrameAdd.TabItem2]
+Coordinates=168,1100,113,33
+
+[FrameAdd.SaveDialog1]
+Coordinates=1002,710,129,33
+
+[FrameAdd]
+Coordinates=10,1041,65,33
+
+[FrameAdd.ListBoxItem2]
+Coordinates=535,1100,132,33
+
+[FrameAdd.ListBoxItem3]
+Coordinates=1150,905,132,33
+
+[FrameAdd.BGPathEdit]
+Coordinates=405,656,125,51
+
+[FrameAdd.RandomBGButton]
+Coordinates=953,828,157,51
+
+[FrameAdd.AnyRequest]
+Coordinates=1299,417,128,87
+
+[FrameAdd.LoadBGButton]
+Coordinates=1308,905,141,33
+
+[FrameAdd.Layout3]
+Coordinates=1247,1041,107,33
+
+[FrameAdd.NetHTTPClient]
+Coordinates=1083,436,140,33
+
+[FrameAdd.ZoomInButton]
+Coordinates=911,656,138,51
+
+[FrameAdd.ListBoxItem1]
+Coordinates=10,1100,132,33
+
+[FrameAdd.TabItem3]
+Coordinates=1556,905,113,33
+
+[FrameAdd.GlowEffect1]
+Coordinates=238,808,127,33
+
+[FrameAdd.Image7]
+Coordinates=1159,751,103,51
+
+[MaterialOxfordBlueSB]
+Coordinates=89,808,123,33
+
+[FrameAdd.Image6]
+Coordinates=374,828,103,51
+
+[FrameAdd.ListBoxItem9]
+Coordinates=398,1041,132,33
+
+[FrameAdd.SetTextButton]
+Coordinates=1484,656,138,51
+
+[FrameAdd.Edit1]
+Coordinates=805,751,93,51
+
+[FrameAdd.ListBoxItem4]
+Coordinates=1298,982,132,33
+
+[FrameAdd.Text1]
+Coordinates=924,751,95,51
+
+[FrameAdd.Layout2]
+Coordinates=782,982,107,33
+
+[FrameAdd.Image4]
+Coordinates=1417,751,103,51
+
+[FrameAdd.Rectangle2]
+Coordinates=307,1100,123,33
+
+[FrameAdd.TabControl1]
+Coordinates=693,1100,128,33
+
+[FrameAdd.OpenDialog4]
+Coordinates=1347,670,131,33
+
+[FrameAdd.Rectangle1]
+Coordinates=840,1041,123,33
+
+[FrameAdd.ListBoxItem5]
+Coordinates=1089,1041,132,33
+
+[FrameAdd.Label2]
+Coordinates=785,656,100,51
+
+[FrameAdd.RefreshBGButton]
+Coordinates=1136,828,155,51
+
+[FrameAdd.ZoomOutButton]
+Coordinates=1311,656,147,51
+
+[FrameAdd.OpenDialog2]
+Coordinates=1347,835,131,33
+
+[FrameAdd.DescMemo]
+Coordinates=334,751,122,51
+
+[FrameAdd.ListBoxItem7]
+Coordinates=1007,982,132,33
+
+[FrameAdd.Image9]
+Coordinates=638,828,103,51
+
+[FrameAdd.NetHTTPRequest]
+Coordinates=1083,491,152,33
+
+[FrameAdd.ListBox1]
+Coordinates=543,417,116,177
+
+[FrameAdd.RESTResponseDataSetAdapter1]
+Coordinates=1538,323,227,33
+
+[FrameAdd.Rectangle3]
+Coordinates=1380,1041,123,33
+
+[FrameAdd.ContentLayout]
+Coordinates=565,905,140,33
+
+[DM.FeedsFDMemTable]
+Coordinates=621,892,127,33
+Visible=False
+
+[ActionButton]
+Coordinates=611,751,79,51
+
+[ActionLabel]
+Coordinates=235,751,73,51
+
+[DM.FDTable1]
+Coordinates=142,828,79,51
+
+[FeedBS]
+Coordinates=10,417,57,213
+Visible=True
+
+[RSSToPostTab]
+Coordinates=112,982,88,33
+
+[ListView1]
+Coordinates=1215,19,89,213
+Visible=True
+
+[ImageList1]
+Coordinates=1192,274,68,33
+
+[Layout7]
+Coordinates=226,982,53,33
+
+[ActionIconButton]
+Coordinates=1648,656,100,51
+
+[DM.FeedBS]
+Coordinates=1202,417,71,213
+
+[DM.FDMemTable1]
+Coordinates=791,1021,103,33
+Visible=False
+
+[FrameAdd.FeedBS]
+Coordinates=1384,10,106,231
+
+[Label1]
+Coordinates=333,656,46,51
+
+[Layout8]
+Coordinates=353,905,53,33
+
+[RSSFeedEdit]
+Coordinates=270,50,79,51
+Visible=True
+
+[Layout9]
+Coordinates=33,77,53,33
+
+[VertScrollBox1]
+Coordinates=226,362,88,33
+
+[Label2]
+Coordinates=0,0,46,51
+
+[FeaturedImageEdit]
+Coordinates=440,80,107,51
+Visible=True
+
+[DM.FeedsFDTable]
+Coordinates=117,327,103,51
+
+[FeedsBindSourceDB]
+Coordinates=130,30,116,123
 

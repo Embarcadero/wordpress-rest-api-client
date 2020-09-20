@@ -86,6 +86,25 @@ type
     HelpMemo: TMemo;
     MaterialOxfordBlueSB: TStyleBook;
     FrameAdd: TAddFrame;
+    Layout7: TLayout;
+    ActionButton: TButton;
+    ActionIconButton: TButton;
+    ActionLabel: TLabel;
+    RSSToPostTab: TTabItem;
+    FeedBS: TBindSourceDB;
+    ListView1: TListView;
+    ImageList1: TImageList;
+    LinkListControlToField2: TLinkListControlToField;
+    Layout8: TLayout;
+    Label1: TLabel;
+    RSSFeedEdit: TEdit;
+    FeedsBindSourceDB: TBindSourceDB;
+    LinkControlToField6: TLinkControlToField;
+    Layout9: TLayout;
+    Label2: TLabel;
+    FeaturedImageEdit: TEdit;
+    VertScrollBox1: TVertScrollBox;
+    LinkControlToField7: TLinkControlToField;
     procedure MultiView1Enter(Sender: TObject);
     procedure MultiView1Exit(Sender: TObject);
     procedure ContentListViewItemClick(const Sender: TObject;
@@ -108,6 +127,9 @@ type
     procedure MultiView1StartShowing(Sender: TObject);
     procedure MultiView1Hidden(Sender: TObject);
     procedure FormResize(Sender: TObject);
+    procedure ActionButtonClick(Sender: TObject);
+    procedure ListView1UpdateObjects(const Sender: TObject;
+      const AItem: TListViewItem);
   private
     { Private declarations }
 {$IFDEF MSWINDOWS}
@@ -115,6 +137,8 @@ type
 {$ENDIF}
   public
     { Public declarations }
+    procedure LoadFeeds;
+    procedure UpdateListView(Sender: TObject);
   end;
 
 var
@@ -168,6 +192,8 @@ procedure TMainForm.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
   if DM.SettingsFDTable.State=TDataSetState.dsEdit then
     DM.SettingsFDTable.Post;
+  if DM.FeedsFDTable.State=TDataSetState.dsEdit then
+    DM.FeedsFDTable.Post;
 end;
 
 procedure TMainForm.FormCreate(Sender: TObject);
@@ -176,6 +202,9 @@ begin
   SetPermissions;
 {$ENDIF}
   WebBrowser.LoadFromStrings(MemoDefaultDark.Lines.Text.Replace('%s',Memo1.Lines.Text),'about:blank');
+
+  FeedBS.DataSet := DM.FDTable1;
+
   DM.InitializeDatabase;
   if EndPointEdit.Text='' then
     begin
@@ -208,6 +237,11 @@ begin
         SearchEdit.Width := 397;
       end;
     end;
+end;
+
+procedure TMainForm.ActionButtonClick(Sender: TObject);
+begin
+  TabControl1.ActiveTab := RSSToPostTab;
 end;
 
 procedure TMainForm.AddContentButtonClick(Sender: TObject);
@@ -251,20 +285,45 @@ begin
   SettingsLabel.Visible := True;
 end;
 
+procedure TMainForm.UpdateListView(Sender: TObject);
+begin
+  LinkListControlToField2.Active := False;
+  LinkListControlToField2.Active := True;
+end;
+
 procedure TMainForm.PostButtonClick(Sender: TObject);
 begin
-  FrameAdd.CreatePost(Sender);
+  case TabControl1.TabIndex of
+    3:
+      begin
+       FrameAdd.CreateRSSPost(Sender, FeedsBindSourceDB.Dataset.FieldByName('FeaturedImage').AsString, UpdateListView);
+      end
+  else
+    begin
+      FrameAdd.CreatePost(Sender);
+    end;
+  end;
 end;
 
 procedure TMainForm.RefreshButtonClick(Sender: TObject);
 begin
-  TLinkObservers.ControlChanged(SearchEdit);
-  if FDMemTable1.Active then
-    FDMemTable1.EmptyDataSet;
-  HTTPBasicAuthenticator1.Username := DM.SettingsFDTable.FieldByName('Username').AsString;
-  HTTPBasicAuthenticator1.Password := DM.SettingsFDTable.FieldByName('Password').AsString;
-  RESTClient1.BaseURL := DM.SettingsFDTable.FieldByName('Endpoint').AsString;
-  RESTRequest1.ExecuteAsync;
+  case TabControl1.TabIndex of
+    3:
+      begin
+       DM.RefreshFeeds;
+      end
+  else
+    begin
+      TLinkObservers.ControlChanged(SearchEdit);
+      if FDMemTable1.Active then
+        FDMemTable1.EmptyDataSet;
+      HTTPBasicAuthenticator1.Username := DM.SettingsFDTable.FieldByName('Username').AsString;
+      HTTPBasicAuthenticator1.Password := DM.SettingsFDTable.FieldByName('Password').AsString;
+      RESTClient1.BaseURL := DM.SettingsFDTable.FieldByName('Endpoint').AsString;
+      RESTRequest1.ExecuteAsync;
+    end;
+  end;
+
 end;
 
 procedure TMainForm.SaveButtonClick(Sender: TObject);
@@ -296,6 +355,17 @@ end;
 procedure TMainForm.ViewContentButtonClick(Sender: TObject);
 begin
   TabControl1.ActiveTab := ViewContentTab;
+end;
+
+procedure TMainForm.ListView1UpdateObjects(const Sender: TObject;
+  const AItem: TListViewItem);
+begin
+ // if AItem.ImageIndex<>0 then AItem.ImageIndex := 2;
+end;
+
+procedure TMainForm.LoadFeeds;
+begin
+  UpdateListView(Self);
 end;
 
 initialization

@@ -134,3 +134,6 @@ Coordinates=445,366,49,51
 [BGPathEdit]
 Coordinates=602,305,40,51
 
+[DM.FDMemTable1]
+Visible=False
+
