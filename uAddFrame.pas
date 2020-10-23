@@ -246,11 +246,13 @@ begin
         FreeAndNil(UpdatePostRequestObj);
       end;
 
+     TThread.Synchronize(nil, procedure begin
       FeedBS.DataSet.Edit;
       FeedBS.DataSet.FieldByName('posted').AsInteger := 1;
       FeedBS.DataSet.Post;
 
       FNotifyEvent(Sender);
+     end);
 
     except
       on E: Exception do
